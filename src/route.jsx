@@ -8,6 +8,7 @@ import ProductsList from "./components/ProductsList";
 import Reports from "./components/Reports";
 import HomeLayout from "./layout/HomeLayout";
 import LoginWrapper from "./pages/login/LoginWrapper";
+import Subadmin from "./components/Subadmin"
 
 const PrivateRoute = ({ Component: Component }) => {
   const token = Cookies.get("jwt-token");
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
         path: "reports",
         element: <PrivateRoute Component={Reports} />,
       },
+      {
+        path:"/form", 
+        element:<PrivateRoute Component={Subadmin}/>
+      }
     ],
   },
   {

@@ -28,7 +28,7 @@ export default function LoginCard() {
     setLoader(true);
     const { email, password } = data;
     try {
-      const url = "http://localhost:3000/login";
+      const url = "https://th305mmg-3000.inc1.devtunnels.ms/login";
       const options = {
         method: "POST",
         body: JSON.stringify({

@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://th305mmg-3000.inc1.devtunnels.ms";
 
 export const apiUrls = {
   addProducts: `${baseUrl}/product`,

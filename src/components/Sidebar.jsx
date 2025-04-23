@@ -20,6 +20,10 @@ export default function Sidebar() {
       path: "/reports",
       label: "Reports",
     },
+    {
+      path:"/form",
+      label:"subadmin"
+    }
   ];
 
   const handleLogout = () => {
