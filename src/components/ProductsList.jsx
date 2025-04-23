@@ -50,6 +50,7 @@ export default function ProductsList() {
     {
       name: "Title",
       selector: (row) => row?.title || "N.A",
+      
     },
     {
       name: "Price",

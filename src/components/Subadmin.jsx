@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+import DataTable from "react-data-table-component";
 
 export default function Subadmin() {
+  const [info, setInfo] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,9 +29,8 @@ export default function Subadmin() {
   };
   const changerole = (e) => {
     setRole(e.target.value);
-
   };
-  console.log(role)
+  console.log(role);
   const changeProducts = (type) => {
     console.log(products?.type);
     setProducts({
@@ -60,7 +62,7 @@ export default function Subadmin() {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type":"application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(details),
       };
@@ -68,37 +70,79 @@ export default function Subadmin() {
       const response = await fetch(url, options);
       const responseData = await response.json();
       console.log(responseData);
-      if(response.ok){
-
-        toast.success(responseData?.message)
-        setName("")
-        setEmail("")
-        setPassword("")
+      if (response.ok) {
+        toast.success(responseData?.message);
+        setName("");
+        setEmail("");
+        setPassword("");
         setProducts({
-            create: false,
-            delete: false,
-            update: false,
-            read: false,
-          })
-        setRole("")
-      }
-      else {
-        toast.error(responseData?.message)
-
+          create: false,
+          delete: false,
+          update: false,
+          read: false,
+        });
+        setRole("");
+      } else {
+        toast.error(responseData?.message);
       }
     } catch (e) {
-        toast.error('Failed to add')
+      toast.error("Failed to add");
 
       console.log(e);
     }
   };
+
+  const fetchInfo = async () => {
+    try {
+      const url = "https://th305mmg-3000.inc1.devtunnels.ms/users";
+      const options = {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await fetch(url, options);
+      const responseData = await response.json();
+
+      console.log(responseData, "response data");
+      if (response.ok) {
+        return responseData.data;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const { data, isLoading } = useQuery({
+    queryKey: ["fetchInfo"],
+    queryFn: fetchInfo,
+  });
+  const columns = [
+    {
+      name: "S.No",
+      selector: (row, index) => index + 1,
+    },
+    {
+      name: "Name",
+      selector: (row) => row?.name || "N.A",
+    },
+    {
+      name: "Email",
+      selector: (row) => row?.email || "N.A",
+    },
+    {
+      name: "Role",
+      selector: (row) => row?.role || "N.A",
+    },
+  ];
+
   
 
-  console.log(products);
   return (
     <div>
       <form
-        className="flex flex-col items-center pt-[30px] h-screen gap-4"
+        className="flex flex-col items-center pt-[30px] gap-4"
         action=""
         onSubmit={submitForm}
       >
@@ -194,6 +238,12 @@ export default function Subadmin() {
           </div>
         </div>
       </form>
+      <div>
+        <h1 className="text-[20px] font-semibold">Information</h1>
+        <main>
+          <DataTable columns={columns} data={data} />
+        </main>
+      </div>
     </div>
   );
 }
