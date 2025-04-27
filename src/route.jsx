@@ -8,7 +8,7 @@ import ProductsList from "./components/ProductsList";
 import Reports from "./components/Reports";
 import HomeLayout from "./layout/HomeLayout";
 import LoginWrapper from "./pages/login/LoginWrapper";
-import Subadmin from "./components/Subadmin"
+import Subadmin from "./components/Subadmin";
 
 const PrivateRoute = ({ Component: Component }) => {
   const token = Cookies.get("jwt-token");
@@ -23,10 +23,6 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <PrivateRoute Component={Dashboard} />,
-      },
-      {
-        path: "products",
         element: <PrivateRoute Component={Products} />,
         children: [
           {
@@ -34,13 +30,13 @@ export const router = createBrowserRouter([
             element: <PrivateRoute Component={ProductsList} />,
           },
           {
-            path:"add",
-            element:<PrivateRoute Component={AddProductForm} />
+            path: "add",
+            element: <PrivateRoute Component={AddProductForm} />,
           },
           {
-            path:"edit/:id",
-            element:<PrivateRoute Component={AddProductForm} />
-          }
+            path: "edit/:id",
+            element: <PrivateRoute Component={AddProductForm} />,
+          },
         ],
       },
       {
@@ -48,9 +44,9 @@ export const router = createBrowserRouter([
         element: <PrivateRoute Component={Reports} />,
       },
       {
-        path:"/form", 
-        element:<PrivateRoute Component={Subadmin}/>
-      }
+        path: "/form",
+        element: <PrivateRoute Component={Subadmin} />,
+      },
     ],
   },
   {

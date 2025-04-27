@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import Cookies from "js-cookie";
-import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
+import React, { useState } from "react";
 import DataTable from "react-data-table-component";
+import toast from "react-hot-toast";
+import { apiUrls } from "../api";
 
 export default function Subadmin() {
   const [info, setInfo] = useState([]);
@@ -28,6 +29,22 @@ export default function Subadmin() {
     setPassword(e.target.value);
   };
   const changerole = (e) => {
+    if (e.target.value === "EDITOR") {
+      setProducts({
+        create: false,
+        read: false,
+        update: true,
+        delete: true,
+      });
+    } else if (e.target.value === "VIEWER") {
+      setProducts({
+        read: true,
+        create: false,
+
+        update: false,
+        delete: false,
+      });
+    }
     setRole(e.target.value);
   };
   console.log(role);
@@ -57,7 +74,7 @@ export default function Subadmin() {
           Products: products,
         },
       };
-      const url = "https://th305mmg-3000.inc1.devtunnels.ms/signup";
+      const url = apiUrls.addUser;
       const options = {
         method: "POST",
         headers: {
@@ -94,7 +111,7 @@ export default function Subadmin() {
 
   const fetchInfo = async () => {
     try {
-      const url = "https://th305mmg-3000.inc1.devtunnels.ms/users";
+      const url = apiUrls.fetchUser;
       const options = {
         method: "GET",
         headers: {
@@ -137,110 +154,107 @@ export default function Subadmin() {
     },
   ];
 
-  
-
   return (
     <div>
       <form
-        className="flex flex-col items-center pt-[30px] gap-4"
-        action=""
-        onSubmit={submitForm}
-      >
-        <h1 className="text-[blue] font-bold text-[18px]">Add-SubAdmin</h1>
-        <div className="flex flex-col gap-2">
+        className='flex flex-col items-center pt-[30px] gap-4'
+        action=''
+        onSubmit={submitForm}>
+        <h1 className='text-[blue] font-bold text-[18px]'>Add-SubAdmin</h1>
+        <div className='flex flex-col gap-2'>
           <input
-            className="text-[14px] border-[black] border-2 w-[300px] h-[30px] pl-[10px]"
-            type="text"
-            placeholder="Name"
+            className='text-[14px] border-[black] border-2 w-[300px] h-[30px] pl-[10px]'
+            type='text'
+            placeholder='Name'
             onChange={changename}
             value={name}
           />
           <input
-            className="text-[14px] border-[black] border-2 w-[300px] h-[30px] pl-[10px]"
-            type="email"
-            placeholder="Email"
+            className='text-[14px] border-[black] border-2 w-[300px] h-[30px] pl-[10px]'
+            type='email'
+            placeholder='Email'
             onChange={changeemail}
             value={email}
           />
           <input
-            className="text-[14px] border-[black] border-2 w-[300px] h-[30px] pl-[10px]"
-            type="password"
-            placeholder="Password"
+            className='text-[14px] border-[black] border-2 w-[300px] h-[30px] pl-[10px]'
+            type='password'
+            placeholder='Password'
             onChange={changepassword}
             value={password}
           />
-          <label className="text-[16px] font-semibold" for="role">
+          <label className='text-[16px] font-semibold' for='role'>
             Role
           </label>
 
           <select
-            className="border-[black] border-2"
-            name="role"
-            id="role"
-            onChange={changerole}
-          >
-            <option value="ADMIN">Admin</option>
-            <option value="EDITOR">Editor</option>
-            <option value="VIEWER">Viewer</option>
-            <option value="OTHER">Other</option>
+            className='border-[black] border-2'
+            name='role'
+            id='role'
+            onChange={changerole}>
+            <option value='' selected disabled>
+              Select role
+            </option>
+            <option value='EDITOR'>Editor</option>
+            <option value='VIEWER'>Viewer</option>
+            <option value='OTHER'>Other</option>
           </select>
 
-          <h1 className="text-[16px] font-semibold">Products</h1>
-          <div className=" grid grid-cols-3 gap-4">
-            <div className="flex flex-row gap-2">
+          <h1 className='text-[16px] font-semibold'>Products</h1>
+          <div className=' grid grid-cols-3 gap-4'>
+            <div className='flex flex-row gap-2'>
               <input
-                type="checkbox"
-                id="create"
+                type='checkbox'
+                id='create'
                 onChange={() => changeProducts("create")}
                 checked={products.create}
               />
 
-              <label htmlFor="create">Create</label>
+              <label htmlFor='create'>Create</label>
             </div>
-            <div className="flex flex-row gap-2">
+            <div className='flex flex-row gap-2'>
               <input
-                type="checkbox"
-                id="delete"
+                type='checkbox'
+                id='delete'
                 onChange={() => changeProducts("delete")}
                 checked={products.delete}
               />
 
-              <label htmlFor="delete">Delete</label>
+              <label htmlFor='delete'>Delete</label>
             </div>
-            <div className="flex flex-row gap-2">
+            <div className='flex flex-row gap-2'>
               <input
-                type="checkbox"
-                id="update"
+                type='checkbox'
+                id='update'
                 onChange={() => changeProducts("update")}
                 checked={products.update}
               />
 
-              <label htmlFor="update">Update</label>
+              <label htmlFor='update'>Update</label>
             </div>
-            <div className="flex flex-row gap-2">
+            <div className='flex flex-row gap-2'>
               <input
-                type="checkbox"
-                id="read"
+                type='checkbox'
+                id='read'
                 onChange={() => changeProducts("read")}
                 checked={products.read}
               />
 
-              <label htmlFor="read">Read</label>
+              <label htmlFor='read'>Read</label>
             </div>
           </div>
-          <div className="flex items-center justify-center mt-[20px]">
+          <div className='flex items-center justify-center mt-[20px]'>
             <button
-              className="w-[100px] h-[30px] bg-[blue] text-[white]"
-              type="submit"
-            >
+              className='w-[100px] h-[30px] bg-[blue] text-[white]'
+              type='submit'>
               Submit
             </button>
           </div>
         </div>
       </form>
-      <div>
-        <h1 className="text-[20px] font-semibold">Information</h1>
-        <main>
+      <div className='p-4'>
+        <h1 className='text-[20px] font-semibold'>Information</h1>
+        <main className='p-4'>
           <DataTable columns={columns} data={data} />
         </main>
       </div>

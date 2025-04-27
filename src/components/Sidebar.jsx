@@ -1,29 +1,29 @@
+import Cookies from "js-cookie";
 import React from "react";
 import { NavLink, useNavigate } from "react-router";
-import Cookies from "js-cookie";
 import { useAuth } from "../AuthContext";
 
 export default function Sidebar() {
   const { token, setToken } = useAuth();
 
   const navigate = useNavigate();
+
+  const { user } = useAuth();
+
+  console.log(user, "user");
   const sidebarOptions = [
     {
-      path: "",
-      label: "Dashboard",
-    },
-    {
-      path: "/products",
+      path: "/",
       label: "Products",
     },
+    // {
+    //   path: "/reports",
+    //   label: "Reports",
+    // },
     {
-      path: "/reports",
-      label: "Reports",
+      path: "/form",
+      label: "subadmin",
     },
-    {
-      path:"/form",
-      label:"subadmin"
-    }
   ];
 
   const handleLogout = () => {
@@ -31,10 +31,17 @@ export default function Sidebar() {
     Cookies.remove("jwt-token");
     navigate("/login");
   };
+
+  console.log(user, "fetched user");
+
+  const updatedSidebarOptions =
+    user?.role !== "ADMIN"
+      ? sidebarOptions?.filter((item) => item?.label !== "subadmin")
+      : sidebarOptions;
   return (
     <div className='w-[15%] flex flex-col justify-between items-center gap-4 border-r border-solid border-[#000] min-h-screen p-4 '>
       <ul className='flex flex-col gap-4'>
-        {sidebarOptions?.map((item) => (
+        {updatedSidebarOptions?.map((item) => (
           <NavLink
             to={item?.path}
             className={({ isActive }) =>

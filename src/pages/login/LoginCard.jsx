@@ -20,15 +20,17 @@ export default function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
   const [loader, setLoader] = useState(false);
 
-  const {setToken} = useAuth()
+  const { setToken, setUser } = useAuth();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const submitData = async (data) => {
     setLoader(true);
     const { email, password } = data;
     try {
-      const url = "https://th305mmg-3000.inc1.devtunnels.ms/login";
+      const url = "http://localhost:3000/login";
+
+      console.log(url, "url received");
       const options = {
         method: "POST",
         body: JSON.stringify({
@@ -45,14 +47,16 @@ export default function LoginCard() {
       console.log(responseData, "response data");
 
       if (response.ok) {
-        setToken(responseData?.token)
+        setToken(responseData?.token);
         Cookies.set("jwt-token", responseData?.token);
-        navigate('/')
-        
+
+        setUser(responseData?.user);
+        navigate("/");
       } else {
         toast.error(responseData.message);
       }
     } catch (e) {
+      console.log(e, "error");
       toast.error(e?.message);
     }
     setLoader(false);

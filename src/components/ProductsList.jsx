@@ -65,7 +65,7 @@ export default function ProductsList() {
       cell: (row) => (
         <div
           onClick={() => {
-            navigate(`/products/edit/${row?._id}`);
+            navigate(`/edit/${row?._id}`);
           }}
           className='border border-solid border-[#dfdfdf] p-3 rounded-md'>
           <Icon icon='material-symbols:edit' className='text-base' />
