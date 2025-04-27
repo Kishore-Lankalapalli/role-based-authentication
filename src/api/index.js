@@ -1,4 +1,7 @@
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://role-based-authentication-backend-n7zyxaiws.vercel.app";
+
+
+//const baseUrl ='http://localhost:4000'
 
 export const apiUrls = {
   addProducts: `${baseUrl}/product`,
