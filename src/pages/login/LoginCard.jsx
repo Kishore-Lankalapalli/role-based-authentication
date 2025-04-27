@@ -153,7 +153,7 @@ export default function LoginCard() {
 
         <button
           type='submit'
-          className='bg-[#105A63] text-white text-base font-semibold py-2 sm:py-4 rounded-[60px]'>
+          className='bg-[blue] text-white text-base font-semibold py-2 sm:py-4 rounded-[60px]'>
           {loader ? (
             <PulseLoader size={5} color='#fff' speedMultiplier={2} />
           ) : (
