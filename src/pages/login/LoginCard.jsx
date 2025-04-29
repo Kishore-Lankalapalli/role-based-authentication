@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { PulseLoader } from "react-spinners";
 import { useAuth } from "../../AuthContext";
+import { apiUrls } from "../../api";
 // Files import
 
 export default function LoginCard() {
@@ -28,7 +29,7 @@ export default function LoginCard() {
     setLoader(true);
     const { email, password } = data;
     try {
-      const url = "https://role-based-authentication-backend-n7zyxaiws.vercel.app/login";
+      const url = apiUrls.login;
 
       console.log(url, "url received");
       const options = {
