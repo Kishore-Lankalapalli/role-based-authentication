@@ -72,7 +72,7 @@ export default function LoginCard() {
             Welcome Back!
           </h1>
           <p className='text-[#6B7283] text-sm sm:text-base font-normal text-left'>
-            Enter your user id and password to access your account securely.
+            Enter your  email and password to access your account securely.
             Welcome back to our platform!
           </p>
         </div>
