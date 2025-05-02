@@ -10,15 +10,12 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(Cookies.get("jwt-token") || "");
   const [user, setUser] = useState();
 
   const fetchUserDetails = async () => {
     try {
       const token = Cookies.get("jwt-token");
-
-      console.log(token , "token recived")
-
       const url = apiUrls.fetchUserDetails;
 
       const options = {
@@ -37,9 +34,13 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         setUser(responseData?.data);
       } else {
+        Cookies.remove("jwt-token");
+        // navigate("/login");
         setUser(null);
       }
     } catch (e) {
+      Cookies.remove("jwt-token");
+      // navigate("/login");
       console.log(e);
     }
   };

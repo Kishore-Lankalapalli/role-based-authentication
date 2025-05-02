@@ -47,6 +47,10 @@ export const router = createBrowserRouter([
         path: "/form",
         element: <PrivateRoute Component={Subadmin} />,
       },
+      {
+        path:"/form/edit/:id",
+        element:<PrivateRoute Component={Subadmin} />
+      }
     ],
   },
   {

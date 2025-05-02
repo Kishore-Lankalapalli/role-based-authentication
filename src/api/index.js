@@ -1,6 +1,6 @@
 const baseUrl = "https://role-based-authentication-backend-6ujp.onrender.com";
 
-// baseUrl ='http://localhost:4000'
+//const  baseUrl ='http://localhost:4000'
 
 export const apiUrls = {
   login: `${baseUrl}/login`,
@@ -12,4 +12,7 @@ export const apiUrls = {
   addUser: `${baseUrl}/signup`,
   fetchUser: `${baseUrl}/users`,
   fetchUserDetails: `${baseUrl}/user`,
+  fetchSpecificUserDetails:(id) =>   `${baseUrl}/user/${id}`,
+  updateSpecificUserDetails:(id) =>   `${baseUrl}/user/${id}`
+
 };
